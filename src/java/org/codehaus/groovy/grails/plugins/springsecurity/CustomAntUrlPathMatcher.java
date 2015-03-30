@@ -70,8 +70,8 @@ public class CustomAntUrlPathMatcher implements UrlMatcher {
 
         private String pathSeparator = DEFAULT_PATH_SEPARATOR;
 
-        private final Map<String, AntPathStringMatcher> stringMatcherCache =
-                new ConcurrentHashMap<String, AntPathStringMatcher>();
+        private final Map<String, StringMatcher> stringMatcherCache =
+                new ConcurrentHashMap<String, StringMatcher>();
 
 
         /** Set the path separator to use for pattern parsing. Default is "/", as in Ant. */
@@ -250,9 +250,13 @@ public class CustomAntUrlPathMatcher implements UrlMatcher {
          * @return <code>true</code> if the string matches against the pattern, or <code>false</code> otherwise.
          */
         private boolean matchStrings(String pattern, String str, Map<String, String> uriTemplateVariables) {
-            AntPathStringMatcher matcher = this.stringMatcherCache.get(pattern);
+            StringMatcher matcher = this.stringMatcherCache.get(pattern);
             if (matcher == null) {
-                matcher = new AntPathStringMatcher(pattern);
+                if (pattern.contains("*") || pattern.contains("?") || pattern.contains("{") || pattern.contains("}"))
+                    matcher = new AntPathStringMatcher(pattern);
+                else
+                    matcher = new SimpleStringMatcher(pattern);
+
                 this.stringMatcherCache.put(pattern, matcher);
             }
             return matcher.matchStrings(str, uriTemplateVariables);
@@ -492,7 +496,21 @@ public class CustomAntUrlPathMatcher implements UrlMatcher {
         }
     }
 
-    static class AntPathStringMatcher {
+    static class SimpleStringMatcher implements StringMatcher {
+
+        private String pattern;
+
+        public SimpleStringMatcher(String pattern) {
+            this.pattern = pattern;
+        }
+
+        @Override
+        public boolean matchStrings(String str, Map<String, String> uriTemplateVariables) {
+            return pattern.equals(str);
+        }
+    }
+
+    static class AntPathStringMatcher implements StringMatcher {
 
         private static final Pattern GLOB_PATTERN = Pattern.compile("\\?|\\*|\\{((?:\\{[^/]+?\\}|[^/{}]|\\\\[{}])+?)\\}");
 
@@ -577,5 +595,9 @@ public class CustomAntUrlPathMatcher implements UrlMatcher {
             }
         }
 
+    }
+
+    interface StringMatcher {
+        boolean matchStrings(String str, Map<String, String> uriTemplateVariables);
     }
 }
