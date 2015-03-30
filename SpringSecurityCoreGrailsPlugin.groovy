@@ -14,6 +14,7 @@
  */
 import grails.plugins.springsecurity.BCryptPasswordEncoder
 import grails.plugins.springsecurity.DigestAuthPasswordEncoder
+import org.codehaus.groovy.grails.plugins.springsecurity.CustomAntUrlPathMatcher
 
 import javax.servlet.Filter
 
@@ -114,7 +115,7 @@ import org.codehaus.groovy.grails.plugins.springsecurity.WebExpressionVoter
  */
 class SpringSecurityCoreGrailsPlugin {
 
-	String version = '1.2.7.4'
+	String version = '1.2.7.4.1'
 	String grailsVersion = '1.2.2 > *'
 	List observe = ['controllers']
 	List loadAfter = ['controllers', 'services', 'hibernate']
@@ -341,7 +342,7 @@ to default to 'Annotation'; setting value to 'Annotation'
 				expressionHandler = ref('webExpressionHandler')
 				boolean lowercase = conf.controllerAnnotations.lowercase // true
 				if ('ant'.equals(conf.controllerAnnotations.matcher)) {
-					urlMatcher = new AntUrlPathMatcher(lowercase)
+					urlMatcher = new CustomAntUrlPathMatcher(lowercase)
 				}
 				else {
 					urlMatcher = new RegexUrlPathMatcher(lowercase)
@@ -356,7 +357,7 @@ to default to 'Annotation'; setting value to 'Annotation'
 				roleVoter = ref('roleVoter')
 				authenticatedVoter = ref('authenticatedVoter')
 				expressionHandler = ref('webExpressionHandler')
-				urlMatcher = new AntUrlPathMatcher(true)
+				urlMatcher = new CustomAntUrlPathMatcher(true)
 				if (conf.rejectIfNoRule instanceof Boolean) {
 					rejectIfNoRule = conf.rejectIfNoRule
 				}
@@ -367,7 +368,7 @@ to default to 'Annotation'; setting value to 'Annotation'
 				roleVoter = ref('roleVoter')
 				authenticatedVoter = ref('authenticatedVoter')
 				expressionHandler = ref('webExpressionHandler')
-				urlMatcher = new AntUrlPathMatcher(true)
+				urlMatcher = new CustomAntUrlPathMatcher(true)
 				if (conf.rejectIfNoRule instanceof Boolean) {
 					rejectIfNoRule = conf.rejectIfNoRule
 				}
