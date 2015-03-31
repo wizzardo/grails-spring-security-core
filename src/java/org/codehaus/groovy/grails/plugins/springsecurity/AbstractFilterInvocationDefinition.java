@@ -139,7 +139,7 @@ public abstract class AbstractFilterInvocationDefinition
 				String pattern = entry.getKey();
 				if (customMatcher.pathMatchesUrl(pattern, url, entry.getValue().value, pathDirs)) {
 					// TODO this assumes Ant matching, not valid for regex
-					if (configAttributes == null || customMatcher.pathMatchesUrl(String.valueOf(configAttributePattern), pattern, matched.value,pathDirs)) {
+					if (configAttributes == null || customMatcher.pathMatchesUrl(String.valueOf(configAttributePattern), pattern, matched.value, entry.getValue().value)) {
 						configAttributes = entry.getValue().key;
 						configAttributePattern = pattern;
 						matched = entry.getValue();
