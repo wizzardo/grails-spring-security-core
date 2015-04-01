@@ -37,7 +37,7 @@ class ChannelFilterInvocationSecurityMetadataSourceFactoryBeanTests extends Groo
 			_factory.afterPropertiesSet()
 		}
 
-		_factory.urlMatcher = new AntUrlPathMatcher()
+		_factory.urlMatcher = new CustomAntUrlPathMatcher()
 		shouldFail(IllegalArgumentException) {
 			_factory.afterPropertiesSet()
 		}
@@ -52,7 +52,7 @@ class ChannelFilterInvocationSecurityMetadataSourceFactoryBeanTests extends Groo
 	}
 
 	void testGetObject() {
-		_factory.urlMatcher = new AntUrlPathMatcher()
+		_factory.urlMatcher = new CustomAntUrlPathMatcher()
 		_factory.definition = ['/foo1/**': 'REQUIRES_SECURE_CHANNEL',
 		                       '/foo2/**': 'REQUIRES_INSECURE_CHANNEL',
 		                       '/foo3/**': 'ANY_CHANNEL']

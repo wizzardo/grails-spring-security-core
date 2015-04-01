@@ -87,13 +87,13 @@ class RequestmapFilterInvocationDefinitionTests extends GrailsUnitTestCase {
 			_fid.afterPropertiesSet()
 		}
 
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 
 		_fid.afterPropertiesSet()
 	}
 
 	void testStoreMapping() {
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 
 		assertEquals 0, _fid.configAttributeMap.size()
 
@@ -109,7 +109,7 @@ class RequestmapFilterInvocationDefinitionTests extends GrailsUnitTestCase {
 
 	void testReset() {
 		_fid = new TestRequestmapFilterInvocationDefinition()
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 		_fid.roleVoter = new RoleVoter()
 		_fid.authenticatedVoter = new AuthenticatedVoter()
 		_fid.expressionHandler = new DefaultWebSecurityExpressionHandler()
@@ -123,7 +123,7 @@ class RequestmapFilterInvocationDefinitionTests extends GrailsUnitTestCase {
 
 	void testInitialize() {
 		_fid = new TestRequestmapFilterInvocationDefinition()
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 		_fid.roleVoter = new RoleVoter()
 		_fid.authenticatedVoter = new AuthenticatedVoter()
 		_fid.expressionHandler = new DefaultWebSecurityExpressionHandler()
@@ -140,7 +140,7 @@ class RequestmapFilterInvocationDefinitionTests extends GrailsUnitTestCase {
 	}
 
 	void testDetermineUrl() {
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 
 		def request = new MockHttpServletRequest()
 		def response = new MockHttpServletResponse()

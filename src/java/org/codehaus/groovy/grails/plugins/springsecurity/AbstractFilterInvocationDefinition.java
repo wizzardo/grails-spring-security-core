@@ -205,8 +205,10 @@ public abstract class AbstractFilterInvocationDefinition
 	public void setUrlMatcher(final UrlMatcher urlMatcher) {
 		_urlMatcher = urlMatcher;
 		_stripQueryStringFromUrls = _urlMatcher instanceof AntUrlPathMatcher;
-		if(urlMatcher instanceof CustomAntUrlPathMatcher)
+		if(urlMatcher instanceof CustomAntUrlPathMatcher) {
 			customMatcher = (CustomAntUrlPathMatcher) urlMatcher;
+			_stripQueryStringFromUrls = true;
+		}
 	}
 
 	/**

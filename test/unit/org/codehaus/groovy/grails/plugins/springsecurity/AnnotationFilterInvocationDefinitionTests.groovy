@@ -72,7 +72,7 @@ class AnnotationFilterInvocationDefinitionTests extends GroovyTestCase {
 //	}
 
 	void testLowercaseAndStripQuerystring() {
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 
 		assertEquals '/foo/bar', _fid.lowercaseAndStripQuerystring('/foo/BAR')
 		assertEquals '/foo/bar', _fid.lowercaseAndStripQuerystring('/foo/bar')
@@ -97,7 +97,7 @@ class AnnotationFilterInvocationDefinitionTests extends GroovyTestCase {
 		def chain = new MockFilterChain()
 		FilterInvocation filterInvocation = new FilterInvocation(request, response, chain)
 
-		def matcher = new AntUrlPathMatcher()
+		def matcher = new CustomAntUrlPathMatcher()
 
 		_fid = new MockAnnotationFilterInvocationDefinition()
 		_fid.urlMatcher = matcher
@@ -139,7 +139,7 @@ class AnnotationFilterInvocationDefinitionTests extends GroovyTestCase {
 		request.requestURI = 'requestURI'
 
 		_fid = new MockAnnotationFilterInvocationDefinition()
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 
 		def urlMappingsHolder = [matchAll: { String uri -> [] as UrlMappingInfo[] }] as UrlMappingsHolder
 		_fid.initialize [:], urlMappingsHolder, [] as GrailsClass[]
@@ -159,7 +159,7 @@ class AnnotationFilterInvocationDefinitionTests extends GroovyTestCase {
 
 		_fid = new MockAnnotationFilterInvocationDefinition(
 			url: 'FOO?x=1', application: _application,
-			urlMatcher: new AntUrlPathMatcher())
+			urlMatcher: new CustomAntUrlPathMatcher())
 
 		UrlMappingInfo[] mappings = [[getControllerName: { -> 'foo' },
 		                              getActionName: { -> 'bar' },
@@ -208,7 +208,7 @@ class AnnotationFilterInvocationDefinitionTests extends GroovyTestCase {
 		GrailsClass[] controllerClasses = [new DefaultGrailsControllerClass(ClassAnnotatedController),
 		                                   new DefaultGrailsControllerClass(MethodAnnotatedController)]
 
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 		_fid.roleVoter = new RoleVoter()
 		_fid.authenticatedVoter = new AuthenticatedVoter()
 		_fid.expressionHandler = new DefaultWebSecurityExpressionHandler()

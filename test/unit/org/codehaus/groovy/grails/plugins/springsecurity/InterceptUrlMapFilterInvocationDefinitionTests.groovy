@@ -45,7 +45,7 @@ class InterceptUrlMapFilterInvocationDefinitionTests extends GroovyTestCase {
 	protected void setUp() {
 		super.setUp()
 		ReflectionUtils.application = _application
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 	}
 
 	void testAfterPropertiesSet() {
@@ -55,7 +55,7 @@ class InterceptUrlMapFilterInvocationDefinitionTests extends GroovyTestCase {
 			_fid.afterPropertiesSet()
 		}
 
-		_fid.urlMatcher = new AntUrlPathMatcher()
+		_fid.urlMatcher = new CustomAntUrlPathMatcher()
 
 		_fid.afterPropertiesSet()
 	}
@@ -118,7 +118,7 @@ class InterceptUrlMapFilterInvocationDefinitionTests extends GroovyTestCase {
 		def chain = new MockFilterChain()
 		FilterInvocation filterInvocation = new FilterInvocation(request, response, chain)
 
-		def matcher = new AntUrlPathMatcher()
+		def matcher = new CustomAntUrlPathMatcher()
 		MockInterceptUrlMapFilterInvocationDefinition fid
 
 		def initializeFid = {
